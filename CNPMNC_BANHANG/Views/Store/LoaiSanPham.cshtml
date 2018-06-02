@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CNPMNC_BANHANG.Models.LOAISANPHAM>
+
+<h5 class="my-4">DANH MỤC SẢN PHẨM</h5>
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <a href="@Url.Action("SPTheoLoai","Store", new { maloai = item.maloai})" class="list-group-item">@item.tenloai</a>
+    }
+</div>

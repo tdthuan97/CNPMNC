@@ -1,0 +1,146 @@
+﻿@model CNPMNC_BANHANG.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Suasanpham";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+<script src="~/js/jquery-1.8.3.min.js"></script>
+<script>
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlLoai').change(function () {
+            var m = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/Admin/GetNhaCungCap",
+                data: { maloai: m },
+                contentType: 'application/json',
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    var ncc = "<select id='ddlNCC'>";
+                    if (data.length == 0) ncc = ncc + '<option value="">Không có nhà cung cấp nào</option>';
+                    else {
+                        ncc = ncc + '<option value="">--Select--</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            ncc = ncc + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        }
+                    }
+                    ncc = ncc + '</select>';
+                    $('#ddlNCC').html(ncc);
+                }
+            });
+        });
+    });
+</script>
+
+<h2 style="margin-left:20px">ĐIỀU CHỈNH THÔNG TIN SẢN PHẨM</h2>
+
+@using (Html.BeginForm("Suasanpham", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.masanpham)
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Mã sản phẩm</p>
+
+            <div class="col-md-5">
+                <div style="font:18px; padding:5px 0 0 5px">@ViewBag.Masp</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Tên sản phẩm</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tensanpham, new { htmlAttributes = new { @class = "form-control" } })
+                <p class="text-danger">@ViewData["Loi1"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Giá</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gia, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1", @onkeypress = "validate(event)" } })
+                <p class="text-danger">@ViewData["Loi2"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Mô tả:</p>
+            <div class="col-md-10">
+                <textarea name="Mota" placeholder="Mô tả thông tin sản phẩm">@ViewBag.Mota</textarea>
+                <p class="text-danger">@ViewData["Loi3"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Hình</p>
+            <div class="col-md-10">
+                Chọn ảnh mới
+
+                <input type="file" name="uploadFile" style="width:300px" />
+                <img src="@Url.Content("~/img/" + @Model.hinh)" style="width:120px" /><p>(Ảnh hiện tại)</p>
+                @ViewBag.ThongBao
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Ngày cập nhật</p>
+            <div class="col-md-10">
+                <p>@DateTime.Now</p>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Loại sản phẩm</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.maloai, (SelectList)ViewBag.DropdownListOptions, new { @id = "ddlLoai" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Nhà cung cấp</p>
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.mancc, (SelectList)ViewBag.DropdownListOptionsNCC, new { @id = "ddlNCC" })
+                <p class="text-danger">@ViewData["Loi5"]</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <p class="control-label col-md-2" style="font-weight:bold;font-size:24px">Trạng thái</p>
+            <div class="col-md-10">
+                    <label>
+                        @Html.RadioButtonFor(model => model.trangthai,true, new { @class = "radio-inline", id = "" })
+                        <span>Đang bán</span>
+                    </label>
+                    <label>
+                        @Html.RadioButtonFor(model => model.trangthai,false, new { @class = "radio-inline", id = "" })
+                        <span>Ngừng bán</span>
+                    </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("TRỞ VỀ", "Sanpham")
+</div>

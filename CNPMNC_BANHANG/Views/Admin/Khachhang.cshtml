@@ -1,0 +1,157 @@
+﻿@*@using CNPMNC_BANHANG.Models;
+    @using PagedList.Mvc;
+    @model PagedList.PagedList<CNPMNC_BANHANG.Models.KHACHHANG>*@
+
+@model IEnumerable<CNPMNC_BANHANG.Models.KHACHHANG>
+@{
+    ViewBag.Title = "Khachhang";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>DANH SÁCH KHÁCH HÀNG</h2>
+@*@using (Html.BeginForm())
+    {
+        <div class="float-left input-group-sm input-group-append p">
+            <input type="text" class="form-control" placeholder="Tìm kiếm khách hàng..." name="SearchString" value="@ViewBag.Search">
+            <input type="submit" value="Tìm kiếm" />
+        </div>
+    }
+    <p><br /></p>
+    <p style="font-size:15px;width:27em;">@ViewBag.Ketqua</p>*@
+
+<table id="table_id" class="table table-info table-hover" border="1">
+    <thead>
+        <tr class="custom_centered" style="font-size:15px;">
+            <th>
+                Mã KH
+            </th>
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Tài khoản
+            </th>
+            <th>
+                Mật khẩu
+            </th>
+
+            <th>
+                Giới tính
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="font-size:12px;text-align:center; height:50px">
+                <td>
+                    @Html.DisplayFor(modelItem => item.makh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hoten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.password)
+                </td>
+
+                <td>
+                    @if (item.gioitinh == null)
+                    {
+                        <label></label>
+                    }
+                    @if (item.gioitinh != null)
+                    {
+                        @((bool)item.gioitinh ? "Nam" : "Nữ")
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.diachi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sdt)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').dataTable();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.js"></script>
+
+}
+@section css
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.css">
+}
+<style>
+    tr.custom_centered th {
+        text-align: center;
+    }
+</style>
+@*<div class="center">
+        <div class="MenuTrang ">
+            <p style="text-align:center">@Html.PagedListPager(Model, page => Url.Action("Khachhang", new { page = page }))</p>
+        </div>
+    </div>
+    <style>
+        .MenuTrang {
+            display: inline-block;
+        }
+
+            .MenuTrang li {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                border: 1px solid #ddd;
+                margin: 0 4px;
+            }
+
+        .center {
+            text-align: center;
+        }
+
+        .MenuTrang li.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .MenuTrang li:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        tr.custom_centered th {
+            text-align: center;
+        }
+    </style>*@
+
+

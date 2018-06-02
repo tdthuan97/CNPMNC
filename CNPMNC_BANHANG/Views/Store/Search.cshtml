@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@helper Truncate(string input, int length)
+    {
+        if (input.Length < length)
+        {
+            @input
+        }
+        else
+        {
+            @input.Substring(0, length)<text>...</text>
+        }
+}
+@foreach (var sp in Model)
+{
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="@Url.Action("Details", "Store", new { masp = @sp.masanpham })"><img class="card-img-top" src="../../img/@sp.hinh" style="height:225px; width:225px"></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="@Url.Action("Details", "Store", new { masp = @sp.masanpham })">@sp.tensanpham</a>
+                </h4>
+                <h5>@String.Format("{0:0,0}", @sp.gia) VNĐ</h5>
+                <p class="card-text">@Truncate(sp.mota, 100)</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+        </div>
+    </div>
+}
+

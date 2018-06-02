@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        Log in
+    </title>
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
+    {
+        <h1>ĐĂNG NHẬP HỆ THỐNG</h1>
+        <p style="text-align:center">@Html.ValidationMessage("CredentialError", new { style = "color:red" })</p>
+        @Html.ValidationSummary(true)
+        <div class="inset">
+            <p>
+                <label for="email">USERNAME</label>
+                <input type="text" name="username">
+                <h4 style="color:red">@ViewData["Loi1"]</h4>
+            </p>
+            <p>
+                <label for="password">PASSWORD</label>
+                <input type="password" name="password">
+                <h4 style="color:red">@ViewData["Loi2"]</h4>
+            </p>
+            <p>
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Remember password</label>
+            </p>
+        </div>
+        <p class="p-container">
+            <span>Forgot password ?</span>
+            <input type="submit" name="go" id="go" value="Log in">
+        </p>
+    }
+</body>
+</html>
+

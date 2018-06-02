@@ -1,0 +1,67 @@
+﻿
+@using CNPMNC_BANHANG.Models;
+
+@{
+    ViewBag.Title = "ThongtinNguoidung";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+</script>
+<div class="col-md-12"><h3 style="text-align: center">THÔNG TIN CÁ NHÂN</h3></div>
+<table align="center">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr style="height:50px;font-size:18px">
+            <td style="">Họ tên: </td>
+            <td>
+                <input type="text" name="hoten" value="@Model.hoten" placeholder="Họ tên"/>
+                <label class="text-danger">@ViewData["Loi1"]</label>
+            </td>
+        </tr>
+        <tr style="height:50px;font-size:18px">
+            <td align="right">Giới tính: </td>
+            <td>
+                <div class="container">
+                    @Html.RadioButton("gioitinh", "1", (bool)ViewBag.Nam ) Nam
+                    @Html.RadioButton("gioitinh", "2", (bool)ViewBag.Nu) Nữ
+                    
+                </div>
+            </td>
+        </tr>
+        <tr style="height:50px;font-size:18px">
+            <td style="">Địa chỉ: </td>
+            <td>
+                <input type="text" name="diachi" value="@Model.diachi" placeholder="Địa chỉ" />
+                <label class="text-danger">@ViewData["Loi2"]</label>
+            </td>
+        </tr>
+        <tr style="height:50px;font-size:18px">
+            <td style="">Email: </td>
+            <td>
+                @Html.TextBox("email", (string)Model.email, new { @type = "email", @pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$", @title = "Must conform to the mail format", @placeholder = "Email" })
+                @*<input type="text" name="email" value="@Model.email" pattern=""/>*@
+            </td>
+        </tr>
+        <tr style="height:50px;font-size:18px">
+            <td style="">SĐT: </td>
+            <td>
+                <input type="text" name="sdt" placeholder="Số điện thoại" value="@Model.sdt" maxlength="12" pattern="[0-9].{7,12}" title="The phone number must at least 8 to 12 number" onkeydown="return isNumberKey(event)" />
+                <label class="text-danger">@ViewData["Loi3"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px;font-size:15px">
+            <td></td>
+            <td>
+                <input type="submit" value="Cập nhật" />
+            </td>
+        </tr>
+    }
+</table>
+

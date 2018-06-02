@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CNPMNC_BANHANG.Models.NHACUNGCAP>
+
+<h5 class="my-4">NHÀ CUNG CẤP</h5>
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <a href="@Url.Action("SPTheoLoaiCuaNCC","Store", new { mancc = item.mancc})" class="list-group-item">@item.tenncc</a>
+    }
+</div>
+

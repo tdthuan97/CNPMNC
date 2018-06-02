@@ -1,0 +1,79 @@
+﻿@model CNPMNC_BANHANG.Models.CHITIETDONHANG
+
+@{
+    ViewBag.Title = "Capnhatctdh";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>Cập nhật thông tin chi tiết đơn hàng</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.mactdh)
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Mã chi tiết đơn hàng</label>
+            <div class="col-md-5">
+                @Model.mactdh
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Tên sản phẩm</label>
+            <div class="col-md-5">
+               @Model.SANPHAM.tensanpham
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Số lượng</label>
+            <div class="col-md-5">
+                @Model.soluong
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Đơn giá</label>
+            <div class="col-md-5">
+                @String.Format("{0:0,0}", Model.thanhtien / Model.soluong) VNĐ
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Thành tiền</label>
+            <div class="col-md-5">
+                @String.Format("{0:0,0}", Model.thanhtien) VNĐ
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Ngày giao dự kiến</label>
+                <div class="col-md-5">
+                    @String.Format("{0:dd/MM/yyyy}", Model.ngaygiaodukien)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-5" style="font-weight:bold;font-size:24px">Tình trạng của chi tiết đơn hàng</label>
+            <div class="col-md-5">
+                @Html.DropDownListFor(m=>m.matinhtrang,(SelectList)ViewBag.Tinhtrang)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div style="margin-left:20px;font-size:18px">
+    @Html.ActionLink("TRỞ VỀ", "Chitiethoadon/"+Model.mahd)
+</div>

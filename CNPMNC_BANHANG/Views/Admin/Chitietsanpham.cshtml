@@ -1,0 +1,94 @@
+﻿@model CNPMNC_BANHANG.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Chitietsanpham";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>THÔNG TIN CHI TIẾT SẢN PHẨM</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal size-dt size-dd">
+        <dt>
+            Tên sản phẩm:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tensanpham)
+        </dd>
+
+        <dt>
+            Giá
+        </dt>
+
+        <dd>
+            @String.Format("{0:0,0}", Model.gia) VNĐ
+        </dd>
+
+        <dt>
+            Mô tả:
+        </dt>
+
+        <dd style="width:600px;text-align:justify">
+            @Html.DisplayFor(model => model.mota)
+        </dd>
+
+        <dt>
+            Hình ảnh:
+        </dt>
+
+        <dd>
+            <img src="@Url.Content("~/img/"+Model.hinh)" style="width:220px; height:220px" />
+        </dd>
+
+        <dt>
+            Ngày cập nhật:
+        </dt>
+
+        <dd>
+            @String.Format("{0:dd/MM/yyyy}", Model.ngaycapnhat)
+        </dd>
+
+        <dt>
+            Loại sản phẩm:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LOAISANPHAM.tenloai)
+        </dd>
+
+        <dt>
+            Nhà cung cấp:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NHACUNGCAP.tenncc)
+        </dd>
+        <dt>
+            Trạng thái:
+        </dt>
+
+        <dd>
+            @if (@Model.trangthai == true)
+            {<label>Đang bán</label>}
+            else
+            {<label>Ngừng bán</label>}
+        </dd>
+
+    </dl>
+</div>
+<p style="margin-left:20px;font-size:18px">
+    @Html.ActionLink("ĐIỀU CHỈNH", "Suasanpham", new { id = Model.masanpham }) |
+    @Html.ActionLink("TRỞ VỀ", "Sanpham")
+</p>
+<style>
+    dl.size-dt dt {
+        font-size: 18px;
+    }
+
+    dl.size-dd dd {
+        font-size: 12px;
+    }
+</style>

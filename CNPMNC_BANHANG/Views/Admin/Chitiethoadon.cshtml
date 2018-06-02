@@ -1,0 +1,88 @@
+﻿@model IEnumerable<CNPMNC_BANHANG.Models.CHITIETDONHANG>
+
+
+@{
+    ViewBag.Title = "Chitiethoadon";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>CHI TIẾT ĐƠN HÀNG</h2>
+<a href="@Url.Action("ExportDonHang","Admin",new { id = ViewData["mahd"] })">Report PDF</a>
+<table class="table" border="1">
+    <tr class="custom_centered" style="font-size:15px;">
+        <th>
+            Mã hóa đơn
+        </th>
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Đơn giá
+        </th>
+        <th>
+            Thành tiền
+        </th>
+        <th>
+            Ngày giao dự kiến
+        </th>
+        <th>
+            Ngày giao thật
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th></th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr style="font-size:12px;text-align:center; height:50px">
+            <td>
+                @Html.DisplayFor(modelItem => item.mahd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SANPHAM.tensanpham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.soluong)
+            </td>
+            <td>
+                @String.Format("{0:0,0}", item.thanhtien / item.soluong) VNĐ
+            </td>
+            <td>
+                @String.Format("{0:0,0}", item.thanhtien) VNĐ
+
+            </td>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", item.ngaygiaodukien)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ngaygiaothat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TINHTRANG.tentinhtrang)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Capnhatctdh", new { id = item.mactdh })
+                
+            </td>
+        </tr>
+    }
+
+</table>
+<p style="margin-left:20px;font-size:18px">
+    @Html.ActionLink("TRỞ VỀ", "Donhang" )
+</p>
+<style>
+    .MenuTrang li {
+        display: inline;
+    }
+
+    tr.custom_centered th {
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,73 @@
+﻿@using CNPMNC_BANHANG.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<CNPMNC_BANHANG.Models.SANPHAM>
+@{
+    ViewBag.Title = "SPTheoLoaiCuaNCC";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@helper Truncate(string input, int length)
+    {
+        if (input.Length < length)
+        {
+            @input
+        }
+        else
+        {
+            @input.Substring(0, length)<text>...</text>
+        }
+}
+<div class="col-md-12" style="text-align:center"><h4>@ViewBag.Ketqua</h4></div>
+<div class="col-md-12" style="text-align:center"><h2>@ViewBag.Thongbao</h2></div>
+@foreach (var sp in Model)
+{
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="@Url.Action("Details", "Store", new { masp = sp.masanpham })"><img class="card-img-top" src="../../img/@sp.hinh" style="height:225px; width:225px"></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="@Url.Action("Details", "Store", new { masp = sp.masanpham })">@sp.tensanpham</a>
+                </h4>
+                <h5>@String.Format("{0:0,0}", @sp.gia) VNĐ</h5>
+                <p class="card-text">@Truncate(@sp.mota, 100)</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+        </div>
+    </div>
+}
+<div class="center col-md-12">
+    <div class="MenuTrang ">
+        <p style="text-align:center">@Html.PagedListPager(Model, page => Url.Action("SPTheoLoaiCuaNCC", new { page = page }))</p>
+    </div>
+</div>
+<style>
+    .MenuTrang {
+        display: inline-block;
+    }
+
+        .MenuTrang li {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+    .center {
+        text-align: center;
+    }
+
+    .MenuTrang li.active {
+        background-color: #4CAF50;
+        color: white;
+        border: 1px solid #4CAF50;
+    }
+
+    .MenuTrang li:hover:not(.active) {
+        background-color: #ddd;
+    }
+</style>
+

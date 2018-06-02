@@ -1,0 +1,67 @@
+﻿@model CNPMNC_BANHANG.Models.NHACUNGCAP
+
+@{
+    ViewBag.Title = "Suanhacungcap";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>ĐIỀU CHỈNH THÔNG TIN NHÀ CUNG CẤP</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.mancc)
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Tên nhà cung cấp</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.tenncc, new { htmlAttributes = new { @class = "form-control" } })
+                <p class="text-danger">@ViewData["Loi1"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Địa chỉ</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.diachi, new { htmlAttributes = new { @class = "form-control" } })
+                <p class="text-danger">@ViewData["Loi2"]</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-4" style="font-weight:bold;font-size:24px">Loại sản phẩm</label>
+            <div class="col-md-6">
+                @Model.LOAISANPHAM.tenloai
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="font-weight:bold;font-size:24px">Trạng thái</label>
+            <div class="col-md-10">
+                <label>
+                    @Html.RadioButtonFor(model => model.trangthai, true, new { @class = "radio-inline", id = "" })
+                    <span>Đang hoạt động</span>
+                </label>
+                <label>
+                    @Html.RadioButtonFor(model => model.trangthai, false, new { @class = "radio-inline", id = "" })
+                    <span>Ngừng hoạt động</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("TRỞ VỀ", "Nhacungcap")
+</div>

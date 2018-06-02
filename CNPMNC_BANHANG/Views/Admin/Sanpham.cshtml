@@ -1,0 +1,177 @@
+﻿@*@using CNPMNC_BANHANG.Models;
+    @using PagedList.Mvc;
+    @model PagedList.PagedList<CNPMNC_BANHANG.Models.SANPHAM>*@
+@model IEnumerable<CNPMNC_BANHANG.Models.SANPHAM>
+
+@helper Truncate(string input, int length)
+    {
+        /**/
+
+        if (input.Length < length)
+        {
+            @input
+        }
+        else
+        {
+            @input.Substring(0, length)<text>...</text>
+        }
+}
+
+@{
+    /**/
+
+    ViewBag.Title = "Sanpham";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>QUẢN LÝ THÔNG TIN SẢN PHẨM</h2>
+
+<p>
+    @Html.ActionLink("THÊM MỚI", "Themmoisanpham")
+</p>
+@*@using (Html.BeginForm())
+{
+    <div class="float-left input-group-sm input-group-append p">
+        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." name="SearchString" value="@ViewBag.Search">
+        <input type="submit" value="Tìm kiếm" />
+    </div>
+}
+<p><br /></p>
+<p style="font-size:15px;width:27em;">@ViewBag.Ketqua</p>*@
+<table id="table_id" class="table table-hover table-info" border="1">
+    <thead>
+        <tr class="custom_centered" style="font-size:15px;">
+            <th style="width: 150px">
+                Tên sản phẩm
+            </th>
+            <th style="width: 120px">
+                Giá bán
+            </th>
+            <th style="width: 180px">
+                Mô tả
+            </th>
+            <th style="width: 100px">
+                Hình ảnh
+            </th>
+            <th style="width: 160px">
+                Loại sản phẩm
+            </th>
+            <th style="width: 150px">
+                Nhà cung cấp
+            </th>
+            <th style="width: 180px">
+                Ngày cập nhật
+            </th>
+            <th style="width: 120px">Trạng thái</th>
+            <th style="width:80px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="font-size:12px;text-align:center; height:100px">
+                <td>
+                    @Html.DisplayFor(modelItem => item.tensanpham)
+                </td>
+                <td>
+                    @String.Format("{0:0,0}", @item.gia) VNĐ
+
+                </td>
+                <td>
+                    @Truncate(item.mota, 100)
+
+                </td>
+                <td>
+                    <img src="@Url.Content("~/img/"+item.hinh)" style="width:80px;height:80px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOAISANPHAM.tenloai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NHACUNGCAP.tenncc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ngaycapnhat)
+                </td>
+                <td>
+                    @if (item.trangthai == true)
+                    {<label>Đang bán</label>}
+                    else
+                    {<label>Ngừng bán</label>}
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Suasanpham", new { id = item.masanpham })
+                    <br />
+                    @Html.ActionLink("Chi tiết", "Chitietsanpham", new { id = item.masanpham })
+                    <br />
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_id').dataTable({
+                "pagingType": "full_numbers",
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.js"></script>
+
+}
+@section css
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.css">
+}
+<style>
+    tr.custom_centered th {
+        text-align: center;
+    }
+</style>
+@*<div class="center">
+        <div class="MenuTrang ">
+            <p style="text-align:center">@Html.PagedListPager(Model, page => Url.Action("Sanpham", new { page = page }))</p>
+        </div>
+    </div>
+    <style>
+        .MenuTrang {
+            display: inline-block;
+        }
+
+            .MenuTrang li {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                border: 1px solid #ddd;
+                margin: 0 4px;
+            }
+
+        .center {
+            text-align: center;
+        }
+
+        .MenuTrang li.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .MenuTrang li:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        tr.custom_centered th {
+            text-align: center;
+        }
+    </style>*@
+

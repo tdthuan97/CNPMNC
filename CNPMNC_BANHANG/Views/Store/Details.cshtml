@@ -1,0 +1,29 @@
+﻿@using CNPMNC_BANHANG.Models;
+
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h3>THÔNG TIN CHI TIẾT SẢN PHẨM</h3>
+<div>
+    <div style="width:40%; float:left; border-left: dotted 1px; border-color:azure">
+        <img id="thumb" src="~/img/@Model.hinh" style="width:200px; height:200px" class="zoom" />
+    </div>
+    <div style="width:60%; float:left; padding:10px">
+        <h4 style="font-weight:bold; color:red">Tên sản phẩm: @Model.tensanpham</h4>
+        <p style="text-align:justify"><span style="font-weight:bold">Mô tả: </span>@Model.mota</p>
+        <p style="font-weight:bold">Giá bán: <span style="color:red; font-size:16pt">@String.Format("{0:0,0}", @Model.gia) VNĐ</span></p>
+        <div id="Datmua">
+            <div id="link" style="display: none;">
+                @Url.Action("ThemGiohang", "Giohang", new { @iMaSp = @Model.masanpham, @strURL = Request.Url.ToString() })
+            </div>
+            <button  class="list-group-item add-to-cart">
+                Đặt mua
+            </button>
+        </div>
+    </div>
+</div>
+

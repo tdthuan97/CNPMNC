@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Dangky";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+</script>
+<table align="center">
+    <h2 class="col-md-12" style="text-align:center">ĐĂNG KÝ THÀNH VIÊN</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <tr style="height:50px">
+            <td>Họ tên khách hàng: </td>
+            <td>
+                @Html.TextBox("HoTenKH", "", new {@placeholder="Họ tên" })
+                <label class="text-danger">@ViewData["Loi1"]</label>
+            </td>
+        </tr>
+        <tr style="height:50px">
+            <td>Tên đăng nhập: </td>
+            <td>
+                @Html.TextBox("TenDN","", new { @placeholder = "Tên đăng nhập" })
+                <label class="text-danger">@ViewData["Loi2"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Mật khẩu: </td>
+            <td>
+                <input type="password" placeholder="Mật khẩu" name="Matkhau" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                @*@Html.Password("Matkhau")*@
+                <label class="text-danger">@ViewData["Loi3"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Nhập lại mật khẩu:</td>
+            <td>
+                <input type="password" placeholder="Xác nhận lại mật khẩu" name="Matkhaunhaplai" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                
+                
+                <label class="text-danger">@ViewData["Loi4"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Giới tính:  <br /><label style="font-size:10px">(Không bắt buộc)</label></td>
+            <td style="font-size:14px">
+
+                @Html.RadioButton("gioitinh", "1") Nam
+                @Html.RadioButton("gioitinh", "2") Nữ
+                
+            </td>
+            
+        </tr>
+        <tr style="height:40px">
+            <td>Địa chỉ: </td>
+            <td>
+                <div>
+                    @Html.TextBox("DiachiKH", "", new { @placeholder = "Địa chỉ" })
+                    <label class="text-danger">@ViewData["Loi5"]</label>
+                </div>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Email: <br /><label style="font-size:10px">(Không bắt buộc)</label></td>
+            <td>
+                @Html.TextBox("Email", "", new { @type = "email", @pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$", @title = "Must conform to the mail format", @placeholder = "Email" })
+                @*<input type="email" name="Email" pattern="[a-z0-9._%+-]+[a-z0-9.-]+\.[a-z]{2,3}$">*@
+                <label class="text-danger">@ViewData["Loi7"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td>Điện thoại</td>
+            <td>
+                <input type="text" placeholder="Số điện thoại" name="DienthoaiKH" maxlength="12" pattern="[0-9].{7,12}" title="The phone number must at least 8 to 12 number" onkeydown="return isNumberKey(event)"/>
+                <label class="text-danger">@ViewData["Loi6"]</label>
+            </td>
+        </tr>
+        <tr style="height:40px">
+            <td></td>
+            <td>
+                <input type="submit" value="Đăng ký" />
+            </td>
+        </tr>
+    }
+</table>
+<style>
+    table td:first-child {
+        font-size: 15px;
+    }
+
+    table td:last-child {
+        font-size: 12px;
+    }
+</style>
+
+
+
